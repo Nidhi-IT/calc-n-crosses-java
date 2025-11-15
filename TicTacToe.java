@@ -1,145 +1,142 @@
-import java.util.Scanner;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
-public class TicTacToe {
-    static char[][] board = new char[3][3];
-    static char currentPlayer = 'X';
+public class TicTacToeGUI extends JFrame implements ActionListener {
 
-    static int xWins = 0;
-    static int oWins = 0;
-    static int draws = 0;
+    private JButton[][] buttons = new JButton[3][3];
+    private char currentPlayer = 'X';
+
+    private int xWins = 0, oWins = 0, draws = 0;
+
+    private JLabel statusLabel;
+    private JLabel scoreLabel;
+
+    public TicTacToeGUI() {
+        setTitle("Tic Tac Toe - GUI Version");
+        setSize(400, 500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+     
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.setBackground(Color.GRAY);
+
+        
+        statusLabel = new JLabel("Player X's turn", SwingConstants.CENTER);
+        statusLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        statusLabel.setForeground(Color.WHITE);
+        mainPanel.add(statusLabel, BorderLayout.NORTH);
+
+
+        JPanel gridPanel = new JPanel();
+        gridPanel.setLayout(new GridLayout(3, 3));
+        gridPanel.setBackground(Color.GRAY);
+
+      
+        Font btnFont = new Font("Arial", Font.BOLD, 48);
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                buttons[i][j] = new JButton("");
+                buttons[i][j].setFont(btnFont);
+                buttons[i][j].setFocusPainted(false);
+                buttons[i][j].setBackground(Color.LIGHT_GRAY);
+                buttons[i][j].addActionListener(this);
+                gridPanel.add(buttons[i][j]);
+            }
+        }
+
+        mainPanel.add(gridPanel, BorderLayout.CENTER);
+
+        scoreLabel = new JLabel(getScoreText(), SwingConstants.CENTER);
+        scoreLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        scoreLabel.setForeground(Color.WHITE);
+        mainPanel.add(scoreLabel, BorderLayout.SOUTH);
+
+        add(mainPanel);
+        setVisible(true);
+    }
+
+    private String getScoreText() {
+        return "Score → X Wins: " + xWins + " | O Wins: " + oWins + " | Draws: " + draws;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton btn = (JButton) e.getSource();
+
+        if (!btn.getText().equals("")) {
+            return; 
+        }
+
+        btn.setText(String.valueOf(currentPlayer));
+
+        if (checkWin()) {
+            JOptionPane.showMessageDialog(this, "Player " + currentPlayer + " wins!");
+            if (currentPlayer == 'X') xWins++;
+            else oWins++;
+            resetBoard();
+            scoreLabel.setText(getScoreText());
+            return;
+        }
+
+        if (isBoardFull()) {
+            JOptionPane.showMessageDialog(this, "It's a draw!");
+            draws++;
+            resetBoard();
+            scoreLabel.setText(getScoreText());
+            return;
+        }
+
+        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+        statusLabel.setText("Player " + currentPlayer + "'s turn");
+    }
+
+    private boolean isBoardFull() {
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++)
+                if (buttons[i][j].getText().equals("")) return false;
+        return true;
+    }
+
+    private boolean checkWin() {
+        String p = String.valueOf(currentPlayer);
+
+      
+        for (int i = 0; i < 3; i++) {
+            if (buttons[i][0].getText().equals(p) &&
+                buttons[i][1].getText().equals(p) &&
+                buttons[i][2].getText().equals(p))
+                return true;
+
+            if (buttons[0][i].getText().equals(p) &&
+                buttons[1][i].getText().equals(p) &&
+                buttons[2][i].getText().equals(p))
+                return true;
+        }
+
+        
+        return (buttons[0][0].getText().equals(p) &&
+                buttons[1][1].getText().equals(p) &&
+                buttons[2][2].getText().equals(p)) ||
+
+               (buttons[0][2].getText().equals(p) &&
+                buttons[1][1].getText().equals(p) &&
+                buttons[2][0].getText().equals(p));
+    }
+
+    private void resetBoard() {
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++)
+                buttons[i][j].setText("");
+
+        currentPlayer = 'X';
+        statusLabel.setText("Player X's turn");
+    }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        boolean playAgain = true;
-
-        System.out.println("Welcome to Tic-Tac-Toe!");
-
-        while (playAgain) {
-            resetBoard();
-            boolean gameEnded = false;
-            currentPlayer = 'X';
-            printBoard();
-
-            while (!gameEnded) {
-                int row = -1, col = -1;
-                boolean validInput = false;
-
-                while (!validInput) {
-                    System.out.print("Player " + currentPlayer + ", enter your move (row and column: 1 1 for top-left): ");
-                    if (scanner.hasNextInt()) {
-                        row = scanner.nextInt() - 1;
-                    } else {
-                        System.out.println("Invalid input. Please enter numbers.");
-                        scanner.next(); // discard invalid input
-                        continue;
-                    }
-
-                    if (scanner.hasNextInt()) {
-                        col = scanner.nextInt() - 1;
-                    } else {
-                        System.out.println("Invalid input. Please enter numbers.");
-                        scanner.next(); // discard invalid input
-                        continue;
-                    }
-
-                    if (isValidMove(row, col)) {
-                        board[row][col] = currentPlayer;
-                        validInput = true;
-                    } else {
-                        System.out.println("Invalid move. Try again.");
-                    }
-                }
-
-                printBoard();
-
-                if (checkWin()) {
-                    System.out.println("Player " + currentPlayer + " wins!");
-                    if (currentPlayer == 'X') xWins++;
-                    else oWins++;
-                    gameEnded = true;
-                } else if (isBoardFull()) {
-                    System.out.println("It's a draw!");
-                    draws++;
-                    gameEnded = true;
-                } else {
-                    switchPlayer();
-                }
-            }
-
-            // Show score
-            System.out.println("\nScoreboard:");
-            System.out.println("Player X Wins: " + xWins);
-            System.out.println("Player O Wins: " + oWins);
-            System.out.println("Draws: " + draws);
-
-            System.out.print("\nDo you want to play again? (yes/no): ");
-            String response = scanner.next().toLowerCase();
-            if (!response.equals("yes")) {
-                playAgain = false;
-            }
-        }
-
-        System.out.println("Thanks for playing!");
-        scanner.close();
-    }
-
-    // Reset the board for a new game
-    static void resetBoard() {
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++)
-                board[i][j] = ' ';
-    }
-
-    // Print the current state of the board
-    static void printBoard() {
-        System.out.println("-------------");
-        for (int i = 0; i < 3; i++) {
-            System.out.print("| ");
-            for (int j = 0; j < 3; j++) {
-                System.out.print(board[i][j] + " | ");
-            }
-            System.out.println("\n-------------");
-        }
-    }
-
-    // Check if a move is valid
-    static boolean isValidMove(int row, int col) {
-        return row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == ' ';
-    }
-
-    // Switch turns between players
-    static void switchPlayer() {
-        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-    }
-
-    // Check for a win
-    static boolean checkWin() {
-        // Rows and columns
-        for (int i = 0; i < 3; i++) {
-            if ((board[i][0] == currentPlayer &&
-                 board[i][1] == currentPlayer &&
-                 board[i][2] == currentPlayer) ||
-                (board[0][i] == currentPlayer &&
-                 board[1][i] == currentPlayer &&
-                 board[2][i] == currentPlayer)) {
-                return true;
-            }
-        }
-
-        // Diagonals
-        return (board[0][0] == currentPlayer &&
-                board[1][1] == currentPlayer &&
-                board[2][2] == currentPlayer) ||
-               (board[0][2] == currentPlayer &&
-                board[1][1] == currentPlayer &&
-                board[2][0] == currentPlayer);
-    }
-
-    // Check if the board is full
-    static boolean isBoardFull() {
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++)
-                if (board[i][j] == ' ') return false;
-        return true;
+        new TicTacToeGUI();
     }
 }
