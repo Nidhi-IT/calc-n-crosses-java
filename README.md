@@ -1,59 +1,65 @@
-* calc-n-crosses-java
-* My first repository on GitHub.
-* Java Mini Projects: Basic Calculator & Tic-Tac-Toe Game.
+# calc-n-crosses-java 🧮❌⭕
 
-This repository contains two beginner-friendly Java console applications:
+My first repository on GitHub! This project contains two fully functional, beginner-friendly Java Graphical User Interface (GUI) applications: an advanced BODMAS Calculator and a classic Tic-Tac-Toe game. 
 
-* Project Descriptions
-  
-- Basic Calculator :A simple menu-driven calculator program that performs basic arithmetic operations.
-- Features:
+Both projects were built using **Java Swing** and demonstrate core object-oriented programming concepts, event handling, and custom algorithmic logic.
 
-    - Simple menu-driven interface.
+---
 
-    - Error handling for invalid input and division by zero.
+## Project 1: Advanced BODMAS Calculator (`FixedBasicCalculator.java`)
+A robust graphical calculator that goes beyond standard step-by-step processing. It utilizes a custom **Recursive Descent Parser** to evaluate entire mathematical equations at once, strictly following the order of operations (BODMAS/PEMDAS).
 
-* Tic-Tac-Toe Game : A classic 3x3 Tic-Tac-Toe game for two players in the terminal.
+### Features
+**BODMAS Evaluation:** Accurately handles brackets `()`, exponents `^`, division, multiplication, addition, and subtraction in the correct mathematical sequence.
+**Modern UI:** Built with Java Swing using responsive Layout Managers (`BorderLayout` & `GridLayout`).
+**Dynamic Themes:** Built-in toggle to switch seamlessly between a sleek Dark Mode and a clean Light Mode.
+**Session History:** Keeps a running log of your past calculations in a scrollable side panel.
+**Robust Error Handling:** Safely catches syntax errors, handles division by zero ("Math Error"), and prevents crashes from invalid inputs.
+**Clipboard Support:** Quickly copy your final results to your system clipboard.
 
-- Features
+---
 
- - Player vs Player mode.
+## Project 2: Interactive Tic-Tac-Toe (`TicTacToeGUI.java`)
+A sleek, two-player graphical version of the classic Tic-Tac-Toe game. It features dynamic visual feedback, real-time score tracking, and smooth reset mechanics.
 
- - Input validation (rejects invalid moves).
+### Features
+**Interactive GUI:** A responsive 3x3 clickable grid built with custom fonts and padding.
+**Color-Coded Players:** Player X (Blue) and Player O (Red) are visually distinct for a better user experience.
+**Win Highlighting:** Automatically detects a win and highlights the winning row, column, or diagonal in green.
+**Scoreboard:** Tracks continuous game sessions, recording X wins, O wins, and Draws.
+**Restart Match Mechanics:** Includes a dedicated "Restart Match" button to clear the board mid-game or start a fresh round without losing the session score.
+**Input Validation:** Prevents players from overwriting an already claimed square.
 
- - Automatic win detection.
+---
 
- - Draw detection.
+## How to Run Locally
 
- - Neat console board display after every move.
+### Prerequisites
+**Java Development Kit (JDK) 8** or higher installed on your machine.
 
-These projects are great for learning Java basics, control structures, and object-oriented programming.
+### Instructions
+1. Clone this repository to your local machine:
+   ```bash
+   git clone [https://github.com/Nidhi-IT/calc-n-crosses-java.git](https://github.com/Nidhi-IT/calc-n-crosses-java.git)
 
-* Technologies Used
+### Navigate to the project directory:
 
-  - Java (JDK 8 or above).
-  - No external libraries required.
-  - Console-based application.
+Bash
+cd calc-n-crosses-java
 
-* Learning Outcomes
+### To run the Calculator:
 
-  - Core Java syntax
+Bash
+javac FixedBasicCalculator.java
+java FixedBasicCalculator
 
-  - Functions and modular programming
+### To run Tic-Tac-Toe:
 
-  - Conditionals and loops
+Bash
+javac TicTacToeGUI.java
+java TicTacToeGUI
 
-  - Basic game logic using arrays
+### Built With
 
-  - Exception and input handling
-
-* Future Enhancements
-
-  - Add replay option for both programs.
-
-  - Add scoreboard tracking in Tic-Tac-Toe.
-
-  - Add scientific calculator functions.
-
-  - Add AI mode for single-player Tic-Tac-Toe.
-
+Java - Core programming language.
+Java Swing & AWT - Used for all graphical user interface components and event listeners.
