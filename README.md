@@ -9,6 +9,9 @@ Both projects were built using **Java Swing** and demonstrate core object-orient
 ## Project 1: Advanced BODMAS Calculator (`FixedBasicCalculator.java`)
 A robust graphical calculator that goes beyond standard step-by-step processing. It utilizes a custom **Recursive Descent Parser** to evaluate entire mathematical equations at once, strictly following the order of operations (BODMAS/PEMDAS).
 
+![Dark Mode Calculator](images/calc-dark.png)
+![Light Mode Calculator](images/calc-light.png)
+
 ### Features
 **BODMAS Evaluation:** Accurately handles brackets `()`, exponents `^`, division, multiplication, addition, and subtraction in the correct mathematical sequence.
 **Modern UI:** Built with Java Swing using responsive Layout Managers (`BorderLayout` & `GridLayout`).
@@ -21,6 +24,8 @@ A robust graphical calculator that goes beyond standard step-by-step processing.
 
 ## Project 2: Interactive Tic-Tac-Toe (`TicTacToeGUI.java`)
 A sleek, two-player graphical version of the classic Tic-Tac-Toe game. It features dynamic visual feedback, real-time score tracking, and smooth reset mechanics.
+
+![Tic Tac Toe Winning Board](images/tictactoe-win.png)
 
 ### Features
 **Interactive GUI:** A responsive 3x3 clickable grid built with custom fonts and padding.
